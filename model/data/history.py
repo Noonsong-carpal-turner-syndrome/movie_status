@@ -105,9 +105,7 @@ def get_browserhistory() -> dict:
             query_result = []
             try:
                 cursor.execute(_SQL)
-                cursor.execute("""SELECT COLUMN_NAME
-                FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE urls""")
+                # cursor.execute("""SELECT * FROM urls ORDER BY last_visit_time DESC""")
                 query_result = cursor.fetchall()
             except sqlite3.OperationalError:
                 print('* Notification * ')
@@ -125,11 +123,11 @@ def get_browserhistory() -> dict:
     return browserhistory
 
 
-def write_browserhistory_csv(addr) -> None:
+def write_browserhistory_csv() -> None:
     """It writes csv files that contain the browser history in
     the current working directory. It will writes csv files base on
     the name of browsers the program detects."""
-    
+
     browserhistory = get_browserhistory()
     for browser, history in browserhistory.items():
         with open(browser + '_history.csv', mode='w', encoding='utf-8', newline='') as csvfile:
@@ -139,6 +137,3 @@ def write_browserhistory_csv(addr) -> None:
                 csv_writer.writerow(data)
 
 write_browserhistory_csv()
-
-''' 1. addr 바꿀 수 있게 하기
-    2. domain 나오게 하기 '''
