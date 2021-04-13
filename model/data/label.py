@@ -19,7 +19,7 @@ def labeling(file):#기사 내용 중 단어 선별하기
     doc = ['document', 'docs', 'pdf']  # 정보 및 문서: 5
     edu = ['exam']    # 학습: 6
     car = ['career']  # 사무or경력: 7
-    f = pd.read_csv(file,'r', encoding = 'UTF-8-sig')
+    f = pd.read_csv(file, encoding = 'UTF-8-sig')
     f.columns = ['url', 'title', 'timestamp','label']
     if f['url'].str.contains(word in ent):
         f['label'] = 1
