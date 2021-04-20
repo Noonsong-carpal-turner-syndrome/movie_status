@@ -1,0 +1,19 @@
+{ 
+  "name": "Chrome Screen", 
+  "version": "1.0", 
+  "description": "Build an Extension!", 
+  "manifest_version": 3, 
+  "action": { 
+    "default_popup": "index.html", 
+    "default_title": "Open the popup" 
+  }, 
+  "background": {
+    "service_worker": "background-wrapper.js"
+  },
+  "permissions": [
+    "tabs",
+    "idle",
+    "storage",
+    "unlimitedStorage"
+  ]
+}
