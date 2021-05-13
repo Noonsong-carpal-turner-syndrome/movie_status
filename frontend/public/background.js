@@ -1,47 +1,62 @@
 //일부 구조 수정, async await 적용
+let pieData = {};
+/*let userId = chrome.identity.getProfileUserInfo((userInfo) =>
+  JSON.stringify(userInfo.id)
+);*/
+const isLoaded = false;
 const seconds = { today: 0, total: 0 },
   dates = { today: "", since: "" };
 let CategoriesIsChanged = false,
   categories = {
     entertainment: {
-      name: "엔터테인먼트",
+      name: "entertainment",
       totalSeconds: 0,
-      days: {},
+      domains: {
+        /*
+        "hostname": { 
+          name: "hostname", 
+          totalSeconds: 0, 
+          days: {
+            "yyyy-mm-dd": {seconds : 0},
+            "yyyy-mm-dd": {seconds : 0},
+          } 
+        },*/
+      },
     },
     productivity: {
-      name: "생산성 및 금융",
+      name: "productivity",
       totalSeconds: 0,
-      days: {},
+      domains: {},
     },
     socialMedia: {
-      name: "소셜미디어",
+      name: "socialMedia",
       totalSeconds: 0,
-      days: {},
+      domains: {},
     },
-    InfoAndDocs: {
-      name: "정보 및 문서",
+    infoAndDocs: {
+      name: "infoAndDocs",
       totalSeconds: 0,
-      days: {},
+      domains: {},
     },
     shopping: {
-      name: "쇼핑 및 음식",
+      name: "shopping",
       totalSeconds: 0,
-      days: {},
+      domains: {},
     },
     education: {
-      name: "학습",
+      name: "education",
       totalSeconds: 0,
-      days: {},
+      domains: {},
     },
     business: {
-      name: "사무 및 경력",
+      name: "business",
       totalSeconds: 0,
-      days: {},
+      domains: {},
     },
     etc: {
-      name: "기타",
+      name: "etc",
       totalSeconds: 0,
-      days: {},
+      domains: {},
     },
   };
 
@@ -91,6 +106,7 @@ function saveCateAndTotal(ms) {
   setInterval(() => {
     CategoriesIsChanged && (saveCategories(), saveTotalSeconds());
     console.log(categories);
+    pieData = getPieData();
   }, ms);
 }
 function updateCategories() {
@@ -107,23 +123,38 @@ function updateCategories() {
     }
     chrome.idle.queryState(30, (state) => {
       console.log("state: ", state);
-      let tabId = activeTab.id;
+      let tabId = activeTab.id,
+        tabURL = new URL(activeTab.url),
+        tabHostname = tabURL.hostname;
       /*
       TODO 외부 API 모델 사용
       */
-      let classified = "entertainment"; //dummy
+      let classified = "etc"; //dummy
+      if (tabHostname === "extensions") classified = "entertainment";
+      else if (tabHostname === "www.naver.com") classified = "socialMedia";
+      else if (tabHostname === "www.stackoverflow.com")
+        classified = "education";
+      else if (tabHostname === "velog.io") classified = "infoAndDocs";
+      else if (tabHostname === "www.google.com") classified = "business";
+      else if (tabHostname === "app.slack.com") classified = "business";
+
       if (
         focusedWindow.focused &&
         state === "active" &&
         categories.hasOwnProperty(classified)
       ) {
         let category = categories[classified];
-        category.days[dates.today] = category.days[dates.today] || getDayObj();
-        CategoriesIsChanged = true;
+        category.domains[tabHostname] =
+          category.domains[tabHostname] || getDomainObj(tabHostname);
+        let domainObj = category.domains[tabHostname];
+        domainObj.days[dates.today] =
+          domainObj.days[dates.today] || getDayObj();
         seconds.total += 1;
         seconds.today += 1;
         category.totalSeconds += 1;
-        category.days[dates.today].seconds += 1;
+        domainObj.totalSeconds += 1;
+        domainObj.days[dates.today].seconds += 1;
+        CategoriesIsChanged = true;
         console.log("todaySeconds: ", seconds.today);
       }
     });

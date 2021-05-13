@@ -1,5 +1,11 @@
 try {
-  importScripts("localStorage.js", "functions.js", "background.js");
+  importScripts(
+    "config.js",
+    "localStorage.js",
+    "functions.js",
+    "getPieData.js",
+    "background.js"
+  );
 } catch (e) {
   console.error(e);
 }

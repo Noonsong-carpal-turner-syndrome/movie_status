@@ -1,15 +1,15 @@
-import React from 'react';
-import Home from './Home';
-import Setting from './Setting';
-import Week from './Week';
-import {Route} from 'react-router-dom';
+import React from "react";
+import Home from "./Home";
+import Setting from "./Setting";
+import Week from "./Week";
+import { Route } from "react-router-dom";
 
-function App() {
+function App({ pieData }) {
   return (
     <div>
-      <Route path = "/" exact component= {Home}/>
-      <Route path = "/Setting" component={Setting}/>
-      <Route path = "/Week" component={Week}/>
+      <Route path="/" exact render={() => <Home pieData={pieData} />} />
+      <Route path="/Setting" component={Setting} />
+      <Route path="/Week" component={Week} />
     </div>
   );
 }
