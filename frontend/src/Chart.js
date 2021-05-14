@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ChartFragment from "./ChartFragment";
 import "./css/Chart.css";
+import { CATEGORIES } from "./js/popup-config.js";
 
 const Chart = ({ data, optionOnHandler, optionOutHandler }) => {
   const [hoverFrag, setHoverFrag] = useState("");
@@ -38,11 +39,9 @@ const Chart = ({ data, optionOnHandler, optionOutHandler }) => {
         category={category}
         data={graphConfig}
         onMouseOver={(name, percentage) => {
-          console.log("ChartFragment mouseover");
           setHoverFrag(name);
           setPctString(percentage);
           optionOnHandler(name, index);
-          console.log("hoverFrag:", hoverFrag);
         }}
         onMouseOut={() => {
           setHoverFrag("");
@@ -63,60 +62,31 @@ const Chart = ({ data, optionOnHandler, optionOutHandler }) => {
   }
 
   return (
-    <div>
-      <svg
-        xmlns={"http://www.example.com/webtime-tracker"}
-        class={"doughnut"}
-        width={graphSize}
-        height={graphSize}
-        viewBox={`0 0 ${graphSize} ${graphSize}`}
-        shapeRendering={"geometricPrecision"}
-      >
-        {fragments}
-        <circle
-          cx={graphSize / 2}
-          cy={graphSize / 2}
-          r={(graphSize / 2) * 0.6}
-          fill={"white"}
-        ></circle>
-        {hoverFrag && pctString && (
-          <foreignObject x={61} y={77} width={128} height={96}>
-            <div>
-              <div class="percentText">{pctString}</div>
-              <div class="fragmentText">{CATEGORIES[hoverFrag].name}</div>
-            </div>
-          </foreignObject>
-        )}
-      </svg>
-    </div>
+    <svg
+      xmlns={"http://www.example.com/webtime-tracker"}
+      class={"doughnut"}
+      width={graphSize}
+      height={graphSize}
+      viewBox={`0 0 ${graphSize} ${graphSize}`}
+      shapeRendering={"geometricPrecision"}
+    >
+      {fragments}
+      <circle
+        cx={graphSize / 2}
+        cy={graphSize / 2}
+        r={(graphSize / 2) * 0.6}
+        fill={"white"}
+      ></circle>
+      {hoverFrag && pctString && (
+        <foreignObject x={62} y={97} width={128} height={96}>
+          <div>
+            <div class="percentText">{pctString}</div>
+            {/*<div class="fragmentText">{CATEGORIES[hoverFrag].name}</div>*/}
+          </div>
+        </foreignObject>
+      )}
+    </svg>
   );
 };
 
 export default Chart;
-
-const CATEGORIES = {
-  entertainment: {
-    name: "엔터테인먼트",
-  },
-  productivity: {
-    name: "생산성 및 금융",
-  },
-  socialMedia: {
-    name: "소셜미디어",
-  },
-  infoAndDocs: {
-    name: "정보 및 문서",
-  },
-  shopping: {
-    name: "쇼핑 및 음식",
-  },
-  education: {
-    name: "학습",
-  },
-  business: {
-    name: "사무 및 경력",
-  },
-  etc: {
-    name: "기타",
-  },
-};

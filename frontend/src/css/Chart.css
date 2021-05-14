@@ -1,11 +1,11 @@
 .percentText {
-  color: gray;
+  color: rgb(70, 70, 70);
   font-size: 35px;
   height: 100%;
   justify-content: center;
 }
 .fragmentText {
-  color: gray;
+  color: rgb(70, 70, 70);
   font-size: 17px;
   height: 100%;
   justify-content: center;

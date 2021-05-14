@@ -10,7 +10,6 @@
 }
 
 .Setting-header {
-  background-color: teal;
   flex-direction: row;
   display: flex;
   justify-content: flex-start;
@@ -35,6 +34,5 @@
 .Menu-List {
   display: flex;
   width: 100%;
-  background-color: tomato;
   height: 90%;
 }

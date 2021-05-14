@@ -1,11 +1,11 @@
-.option-container {
+.category-container {
   align-items: flex-start;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   height: 190px;
 }
-.option-title {
+.category-title {
   width: 100%;
   display: flex;
   align-items: flex-end;
@@ -19,45 +19,32 @@
   font-weight: 200;
   color: rgb(0, 0, 0);
 }
-.title {
+.title-category {
   text-align: left;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 200;
   color: rgb(0, 0, 0);
 }
-.option-name {
+.category-name {
   text-align: left;
   font-size: 15px;
   color: rgb(100, 100, 100);
 }
-.option-time {
+.category-time {
   text-align: left;
   font-size: 15px;
   color: rgb(100, 100, 100);
 }
-.option-item {
+.category-items {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.category-item {
   width: 100%;
   flex-direction: row;
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
-}
-.option-items {
-  width: 100%;
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-.option-total {
-  width: 100%;
-  flex-direction: row;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.option-domains {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
 }

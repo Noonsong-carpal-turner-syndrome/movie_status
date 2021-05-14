@@ -1,6 +1,6 @@
 .Home {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
   padding-top: 5px;
   padding-bottom: 5px;
   text-align: center;
@@ -10,63 +10,73 @@
 }
 
 .Home-header {
-  background-color: white;
   height: 5%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   font-size: 15px;
-  color: black;
+  font-weight: bold;
+  color: rgb(139, 139, 139);
 }
 
-.SettingButton {
+.setting-button {
   text-decoration: none;
-  color: black;
+  color: rgb(139, 139, 139);
 }
 
-.SettingButton:visited {
-  color: black;
+.setting-button:visited {
+  color: rgb(139, 139, 139);
 }
 
 .Main {
-  background-color: white;
   width: 100%;
-  height: 55%;
+  height: 70%;
 }
 
-.Day-cumulative-time {
+.main-header {
+  background-color: white;
   flex-direction: row;
   align-items: flex-end;
   display: flex;
   justify-content: space-between;
-  background-color: white;
+  padding-bottom: 15px;
 }
 
-.Day-button {
+.day-week-button {
   background-color: white;
-  font-size: 30px;
-  color: black;
+  font-size: 35px;
+  font-weight: 600;
+  color: rgb(92, 92, 92);
   text-decoration: none;
 }
-.Day-button:visited {
+
+.day-week-button:visited {
   color: black;
 }
-.Day-button:hover {
-  color: white;
+
+.day-week-button:hover {
+  color: black;
 }
 
-.Cumulative-time {
+.accumulate-time {
+  font-size: 25px;
+  font-weight: bold;
+  color: rgb(92, 92, 92);
   background-color: white;
-  font-size: 20px;
 }
 
-.graphWrapper {
-  height: 250px;
-}
-
-.Option {
+.pie-wrapper {
   background-color: white;
-  height: 40%;
+  height: 260px;
+  justify-content: center;
+  align-items: center;
+}
+
+.option-wrapper {
+  position: fixed;
+  top: 360px;
+  width: inherit;
+  background-color: white;
   align-items: flex-start;
 }

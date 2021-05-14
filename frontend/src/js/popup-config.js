@@ -11,6 +11,22 @@ export const getDateString = () => {
 
   return dateString;
 };
+
+export function getTimeString(second) {
+  let tempSec = second;
+  const hour = Math.floor(tempSec / (60 * 60));
+  tempSec = tempSec - hour * 60 * 60;
+  let min = Math.floor(tempSec / 60);
+  let hourString = "";
+  let minString = "";
+  if (hour) {
+    hour = hour < 10 ? "0" + hour : hour;
+    hourString = `${hour}시간 `;
+  }
+  min = min < 10 ? "0" + min : min;
+  minString = `${min}분`;
+  return `${hourString}${minString}`;
+}
 export const CATEGORIES = {
   entertainment: {
     name: "엔터테인먼트",
