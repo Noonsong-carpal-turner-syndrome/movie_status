@@ -1,6 +1,5 @@
-package sm.chromeScreentime.model;
+package sm.chromeScreentime.domain.controller.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;

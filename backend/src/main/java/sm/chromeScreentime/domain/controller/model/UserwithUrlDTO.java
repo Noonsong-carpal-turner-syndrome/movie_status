@@ -1,4 +1,4 @@
-package sm.chromeScreentime.model;
+package sm.chromeScreentime.domain.controller.model;
 
 import java.util.ArrayList;
 
