@@ -2,9 +2,9 @@ package sm.chromeScreentime.domain.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import sm.chromeScreentime.domain.controller.model.UserData;
+import sm.chromeScreentime.domain.model.User;
 
 @Repository
-public interface UserRepository extends MongoRepository<UserData, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 
 }
