@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import ChartFragment from "./ChartFragment";
 import "./css/Chart.css";
-import { CATEGORIES } from "./js/popup-config.js";
+import { CATEGORIES, GRAPH_SIZE } from "./js/popup-config.js";
 
 const Chart = ({ data, optionOnHandler, optionOutHandler }) => {
-  const [hoverFrag, setHoverFrag] = useState("");
   const [pctString, setPctString] = useState("");
   const categories = data.categories;
-  let graphSize = 250,
+  let graphSize = GRAPH_SIZE,
     graphConfig = { graphSize: graphSize, graphGap: 0.4 },
     othersObj = {
-      name: "other",
+      name: "others",
       percentage: 0,
       color: "#d4d4d4",
       startPercentage: 0,
@@ -31,20 +30,20 @@ const Chart = ({ data, optionOnHandler, optionOutHandler }) => {
   } else {
     for (let i = 0; i < categories.length; i++) {
       if (categories[i].isIncluded) includedList.push(categories[i]);
-      else others.push(categories[i]);
+      else {
+        others.push(categories[i]);
+      }
     }
     fragments = includedList.map((category, index) => (
       <ChartFragment
-        id={category.name}
+        id={index}
         category={category}
         data={graphConfig}
-        onMouseOver={(name, percentage) => {
-          setHoverFrag(name);
+        onMouseOver={(percentage) => {
           setPctString(percentage);
-          optionOnHandler(name, index);
+          optionOnHandler(index);
         }}
         onMouseOut={() => {
-          setHoverFrag("");
           setPctString("");
           optionOutHandler("");
         }}
@@ -77,11 +76,10 @@ const Chart = ({ data, optionOnHandler, optionOutHandler }) => {
         r={(graphSize / 2) * 0.6}
         fill={"white"}
       ></circle>
-      {hoverFrag && pctString && (
+      {pctString && (
         <foreignObject x={62} y={97} width={128} height={96}>
           <div>
             <div class="percentText">{pctString}</div>
-            {/*<div class="fragmentText">{CATEGORIES[hoverFrag].name}</div>*/}
           </div>
         </foreignObject>
       )}

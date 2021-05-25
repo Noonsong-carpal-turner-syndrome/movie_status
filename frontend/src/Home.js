@@ -1,5 +1,3 @@
-/*global chrome*/
-//import "./css/Home.css";
 import "./css/HomeCSS.css";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
@@ -13,7 +11,6 @@ function Home({ pieData }) {
   let yyyy = date.getFullYear();
   let mm = date.getMonth();
   let dd = date.getDate();
-  const [hoverFrag, setHoverFrag] = useState(""); //지워도 될듯?
   const [fragIndex, setFragIndex] = useState(-1);
   console.log("msg from home: ", pieData);
   return (
@@ -38,12 +35,10 @@ function Home({ pieData }) {
         <div className="pie-wrapper">
           <Chart
             data={pieData}
-            optionOnHandler={(name, index) => {
-              setHoverFrag(name);
+            optionOnHandler={(index) => {
               setFragIndex(index);
             }}
             optionOutHandler={() => {
-              setHoverFrag("");
               setFragIndex(-1);
             }}
           ></Chart>

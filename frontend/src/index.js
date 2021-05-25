@@ -7,9 +7,9 @@ import { MemoryRouter as Router } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 
 function ping() {
-  chrome.runtime.sendMessage({ request: "log" }, function (response) {
+  chrome.runtime.sendMessage({ request: "PIE_DATA" }, function (response) {
     if (chrome.runtime.lastError) {
-      console.log("error ping");
+      console.log("error ping in PIE_DATA");
       setTimeout(ping, 1000);
     } else {
       console.log("well ping");

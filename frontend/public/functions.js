@@ -1,5 +1,8 @@
-const getDateString = () => {
+const getDateString = (before) => {
   let date = new Date();
+  if (before !== undefined) {
+    date.setDate(date.getDate() - before);
+  }
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
   let d = date.getDate();

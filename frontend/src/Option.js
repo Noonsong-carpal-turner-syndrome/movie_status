@@ -20,7 +20,6 @@ const Option = ({ fragIndex, categories }) => {
       </div>
     </div>
   ));
-  console.log("domain3:", domain3);
 
   return (
     <div className="option-container">

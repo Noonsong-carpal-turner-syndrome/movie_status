@@ -8,7 +8,7 @@ const ChartFragment = ({ category, data, onMouseOver, onMouseOut }) => {
   //   graphSize: u,
   // }
   function mouseOverHandling() {
-    onMouseOver(category.name, category.percentageStr);
+    onMouseOver(category.percentageStr);
   }
   function mouseOutHandling() {
     onMouseOut();
@@ -32,7 +32,16 @@ const ChartFragment = ({ category, data, onMouseOver, onMouseOut }) => {
   if (category.percentage === 0) {
     return <circle cx={cx} cy={cy} r={R} fill={"#494949"} />;
   } else if (category.percentage === 100) {
-    return <circle cx={cx} cy={cy} r={R} fill={category.color} />;
+    return (
+      <circle
+        cx={cx}
+        cy={cy}
+        r={R}
+        fill={category.color}
+        onMouseOver={mouseOverHandling}
+        onMouseOut={mouseOutHandling}
+      />
+    );
   } else {
     A = `M ${cx},${cy} L ${startX},${startY} A ${R},${R} 0 ${angleDirection} 1 ${endX},${endY} Z`;
     return (

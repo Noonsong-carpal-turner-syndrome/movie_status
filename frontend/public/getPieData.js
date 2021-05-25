@@ -98,13 +98,21 @@ function ping() {
     sender,
     sendResponse
   ) {
-    if (message.request == "log") {
+    if (message.request === "PIE_DATA") {
       if (isEmpty(pieData)) {
         console.log("pieData is empty | getPieData.js");
         setTimeout(ping, 10);
       } else {
         console.log("pieData | getPieData.js");
         sendResponse({ msg: pieData });
+      }
+    } else if (message.request === "BAR_CHART_DATA") {
+      if (barChartData) {
+        console.log("barChartData | getPieData.js :", barChartData);
+        sendResponse({ msg: barChartData });
+      } else {
+        console.log("barChartData is empty | getPieData.js");
+        setTimeout(ping, 1000);
       }
     }
   });

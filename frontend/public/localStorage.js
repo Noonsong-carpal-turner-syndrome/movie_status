@@ -13,4 +13,13 @@ const localStorage = {
       callback(storage);
     });
   },
+  loadSeveral: (keys, callback) => {
+    chrome.storage.local.get(keys, (fromStorage) => {
+      let values = {};
+      for (let i in keys) {
+        values[keys[i]] = JSON.parse(fromStorage[keys[i]]);
+      }
+      callback(values);
+    });
+  },
 };
