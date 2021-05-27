@@ -1,4 +1,4 @@
 package sm.chromeScreentime.Service;
 
-public class UserService {
+public interface UserService {
 }

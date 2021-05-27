@@ -1,27 +1,25 @@
-package sm.chromeScreentime.Service;
+package sm.chromeScreentime.repository;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.transaction.annotation.Transactional;
-import sm.chromeScreentime.model.User;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/applicationContext.xml"})
-@Transactional
-@Rollback(value = false)
-public class PetTest {
+@Repository("userDAO")
+public class UserDAO {
 
     @Autowired
     MongoTemplate mongoTemplate;
 
-@Test
-public void queryTest(){
+    @GetMapping("/queryTest")
+    public void queryTest() {
         User user = User.builder().email("randallkk@sookmyung.ac.kr").build();
         mongoTemplate.insert(user);
 
@@ -32,4 +30,5 @@ public void queryTest(){
 
         assertThat(user.getId(), equalTo(findUser.getId()));
         assertThat(user.getUrls(), equalTo(findUser.getUrls()));
-        }
+    }
+}
