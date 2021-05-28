@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface UrlRepository extends MongoRepository<UrlEntity, ObjectId> {
-    UrlEntity findByUrl(ObjectId url);
+    UrlEntity findByUrl(ObjectId url, String label);
     List<UrlEntity> findByDomainLike(String domain);
     List<UrlEntity> findByCategory(String category);
 }

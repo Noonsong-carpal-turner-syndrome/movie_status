@@ -3,6 +3,7 @@ package sm.chromeScreentime.controller;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sm.chromeScreentime.Service.UserService;
@@ -12,20 +13,21 @@ import sm.chromeScreentime.model.UserEntity;
 import java.util.List;
 
 @RestController
-@RequestMapping("/classification")
+@RequestMapping()
 public class UserController {
     @Autowired
     UserService userService;
     //create -post
     //read -get
 
-
-    public List<UserEntity> findByEmail(String email){
-        return userService.findByEmail(email);
+    @GetMapping("/classification")
+    public List<UserEntity> findByEmail(@RequestBody String email, @RequestBody UserEntity.CustomUrl[] urls){
+        return userService.findByEmail(email, urls);
     }
 
-    public UrlEntity findByUrl(ObjectId url){
-        return userService.findByUrl(url);
+    @GetMapping("/model")
+    public UrlEntity findByUrl(@RequestBody ObjectId url,@RequestBody String label){
+        return userService.findByUrl(url, label);
     }
 
     public List<UrlEntity> findByDomainLike(String domain){

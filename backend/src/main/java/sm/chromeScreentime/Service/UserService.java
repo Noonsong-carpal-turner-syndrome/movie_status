@@ -19,12 +19,12 @@ public class UserService {
     @Autowired
     UrlRepository urlRepository;
 
-    public List<UserEntity> findByEmail(String email){
-        return userRepository.findByEmail(email);
+    public List<UserEntity> findByEmail(String email, UserEntity.CustomUrl[] urls){
+        return userRepository.findByEmail(email, urls);
     }
 
-    public UrlEntity findByUrl(ObjectId url){
-        return urlRepository.findByUrl(url);
+    public UrlEntity findByUrl(ObjectId url, String label){
+        return urlRepository.findByUrl(url,label);
     }
 
     public List<UrlEntity> findByDomainLike(String domain){

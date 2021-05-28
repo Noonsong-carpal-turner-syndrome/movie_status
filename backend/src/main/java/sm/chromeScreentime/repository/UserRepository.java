@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends MongoRepository<UserEntity, ObjectId> {
-    List<UserEntity> findByEmail(String email);
+    List<UserEntity> findByEmail(String email, UserEntity.CustomUrl[] urls);
 }
