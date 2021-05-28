@@ -3,6 +3,7 @@ package sm.chromeScreentime.Service;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sm.chromeScreentime.model.UrlDTO;
 import sm.chromeScreentime.model.UrlEntity;
 import sm.chromeScreentime.model.UserEntity;
 import sm.chromeScreentime.repository.UrlRepository;
@@ -34,4 +35,13 @@ public class UserService {
     public List<UrlEntity> findByCategory(String category){
         return urlRepository.findByCategory(category);
     }
+
+    public List<UrlDTO> insertUrl(ObjectId url, String category){
+        return urlRepository.insertUrl(url, category);
+    }
+
+    public List<UrlDTO> insertUserUrl(ObjectId url, String category){
+        return urlRepository.insertUserUrl(url, category);
+    }
+
 }
