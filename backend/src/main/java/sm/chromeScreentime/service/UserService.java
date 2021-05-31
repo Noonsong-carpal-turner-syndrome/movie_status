@@ -1,45 +1,47 @@
 package sm.chromeScreentime.service;
 
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sm.chromeScreentime.domain.dto.UserDTO;
+import sm.chromeScreentime.model.UrlDTO;
+import sm.chromeScreentime.model.UrlEntity;
+import sm.chromeScreentime.model.UserEntity;
+import sm.chromeScreentime.repository.UrlRepository;
 import sm.chromeScreentime.repository.UserRepository;
-import sm.chromeScreentime.domain.request.UserDeleteRequest;
-import sm.chromeScreentime.domain.request.UserRequestBody;
-import sm.chromeScreentime.domain.request.UserSearchRequest;
-import sm.chromeScreentime.domain.request.UserUpdateRequest;
+
+import java.util.List;
 
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
-    public UserService(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    UrlRepository urlRepository;
 
-    public UserDTO searchUserInfo(UserSearchRequest request){
-        return new UserDTO(userRepository.findById(request.getUserId()).orElse(null));
-    }
-
-    public String saveUserInfo(UserRequestBody requestBody){
-        userRepository.save(requestBody.toEntity());
-        return "userID : " + requestBody.getUserId() + "\n"
-                +"username : "+requestBody.getUsername()+"\n"
-                +"ent : "+requestBody.getEnt()+"\n"
-                +"prod : "+requestBody.getProd()+"\n"
-                +"sns : "+requestBody.getSns()+"\n"
-                +"shop : "+requestBody.getShop()+"\n"
-                +"edu : "+requestBody.getEdu()+"\n"
-                +"business : "+requestBody.getBusiness()+"\n"
-                +"etc : "+requestBody.getEtc();
+    public List<UserEntity> findByEmail(String email, UserEntity.CustomUrl[] urls){
+        return userRepository.findByEmail(email, urls);
     }
 
-    public String updateUserInfo(UserUpdateRequest request){
-        //userDao.insert(request);
-        return "";
+    public UrlEntity findByUrl(ObjectId url, String label){
+        return urlRepository.findByUrl(url,label);
     }
-    public String deleteUserInfo(UserDeleteRequest request){
-        //userDao.insert(request);
-        return "";
+
+    public List<UrlEntity> findByDomainLike(String domain){
+        return urlRepository.findByDomainLike(domain);
     }
+
+    public List<UrlEntity> findByCategory(String category){
+        return urlRepository.findByCategory(category);
+    }
+
+    public List<UrlDTO> insertUrl(ObjectId url, String category){
+        return urlRepository.insertUrl(url, category);
+    }
+
+    public List<UrlDTO> insertUserUrl(ObjectId url, String category){
+        return urlRepository.insertUserUrl(url, category);
+    }
+
 }

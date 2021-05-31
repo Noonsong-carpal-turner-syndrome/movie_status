@@ -1,51 +1,47 @@
 package sm.chromeScreentime.controller;
 
-import io.swagger.annotations.ApiOperation;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sm.chromeScreentime.service.UserService;
-import sm.chromeScreentime.domain.dto.UserDTO;
-import sm.chromeScreentime.domain.request.UserDeleteRequest;
-import sm.chromeScreentime.domain.request.UserRequestBody;
-import sm.chromeScreentime.domain.request.UserSearchRequest;
-import sm.chromeScreentime.domain.request.UserUpdateRequest;
+import sm.chromeScreentime.model.UrlDTO;
+import sm.chromeScreentime.model.UrlEntity;
+import sm.chromeScreentime.model.UserEntity;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping()
 public class UserController {
-    private final UserService userService;
+    @Autowired
+    UserService userService;
+    //create -post
+    //read -get
 
-    public UserController (UserService userService){
-        this.userService = userService;
+    @GetMapping("/classification/{email}")
+    public List<UserEntity> findByEmail(@PathVariable String email, @RequestBody UserEntity.CustomUrl[] urls){
+        return userService.findByEmail(email, urls);
     }
 
-    @ApiOperation("사용자용 신규 데이터 생성")
-    @PostMapping("/info")
-    public String userInfoSave(@ModelAttribute UserRequestBody requestBody){
-        return userService.saveUserInfo(requestBody);
+    @GetMapping("/model/{email}")
+    public UrlEntity findByUrl(@PathVariable ObjectId url,@RequestBody String label){
+        return userService.findByUrl(url, label);
+    }
+    /*
+        public List<UrlEntity> findByDomainLike(String domain){
+            return userService.findByDomainLike(domain);
+        }
+        public List<UrlEntity> findByCategory(String category){
+            return userService.findByCategory(category);
+        }
+    */
+    @PostMapping("/model/{email}")
+    public List<UrlDTO> insertUrl(@PathVariable ObjectId url, @RequestBody String category){
+        return userService.insertUrl(url,category);
     }
 
-    //
-    @ApiOperation("title을 검색")
-    @GetMapping("/id")
-    public UserDTO userInfo(@ModelAttribute UserSearchRequest request){
-
-        return userService.searchUserInfo(request);
+    @PostMapping("/user/{email}")
+    public List<UrlDTO> insertUserUrl(@PathVariable ObjectId url, @RequestBody String category){
+        return userService.insertUserUrl(url,category);
     }
-
-    //모델에서 가져오기
-    @ApiOperation("사용자용 데이터 업데이트")
-    @PutMapping("/edit/{id}")
-    public String edit(@ModelAttribute UserUpdateRequest request){
-
-        return userService.updateUserInfo(request);
-    }
-
-    //검색
-    @ApiOperation("사용자용 데이터 삭제")
-    @DeleteMapping("/delete/{id}")
-    public String delete(@ModelAttribute UserDeleteRequest request){
-        return userService.deleteUserInfo(request);
-    }
-
-
 }
