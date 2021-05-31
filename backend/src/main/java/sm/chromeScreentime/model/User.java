@@ -1,4 +1,4 @@
-package sm.chromeScreentime.domain.model;
+package sm.chromeScreentime.model;
 
 import lombok.Getter;
 import lombok.Setter;

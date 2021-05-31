@@ -2,7 +2,7 @@ package sm.chromeScreentime.controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-import sm.chromeScreentime.domain.UserService;
+import sm.chromeScreentime.service.UserService;
 import sm.chromeScreentime.domain.dto.UserDTO;
 import sm.chromeScreentime.domain.request.UserDeleteRequest;
 import sm.chromeScreentime.domain.request.UserRequestBody;

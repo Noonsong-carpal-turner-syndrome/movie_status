@@ -1,8 +1,8 @@
-package sm.chromeScreentime.domain;
+package sm.chromeScreentime.service;
 
 import org.springframework.stereotype.Service;
 import sm.chromeScreentime.domain.dto.UserDTO;
-import sm.chromeScreentime.domain.repository.UserRepository;
+import sm.chromeScreentime.repository.UserRepository;
 import sm.chromeScreentime.domain.request.UserDeleteRequest;
 import sm.chromeScreentime.domain.request.UserRequestBody;
 import sm.chromeScreentime.domain.request.UserSearchRequest;
