@@ -32,6 +32,8 @@ const getColorOfCategory = (name) => {
   return color;
 };
 const getPieData = () => {
+  //getPieData_timeStart = Date.now();
+  //console.log("getPieData timeStart:", getPieData_timeStart);
   const obj = {
     categories: [],
     total: {
@@ -85,7 +87,20 @@ const getPieData = () => {
     }
     obj.categories[i].startPercentage = startPercentages[i];
   }
-
+  getPieData_timeEnd = Date.now();
+  /*
+  console.log("getPieData timeEnd:", getPieData_timeEnd);
+  console.log(
+    "getPieData milliseconds:",
+    getPieData_timeEnd - getPieData_timeStart
+  );
+  if (update_timeStart !== 0)
+    console.log(
+      `-------------count time: ${
+        getPieData_timeEnd - update_timeStart
+      }-------------`
+    );
+    */
   return obj;
 };
 
@@ -101,7 +116,7 @@ function ping() {
     if (message.request === "PIE_DATA") {
       if (isEmpty(pieData)) {
         console.log("pieData is empty | getPieData.js");
-        setTimeout(ping, 10);
+        setTimeout(ping, 100);
       } else {
         console.log("pieData | getPieData.js");
         sendResponse({ msg: pieData });

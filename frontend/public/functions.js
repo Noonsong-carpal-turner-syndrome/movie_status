@@ -15,6 +15,22 @@ const getDateString = (before) => {
   return dateString;
 };
 
+const getBadgeTimeString = (seconds) => {
+  let badgeString = seconds + "";
+  /* 시간 잘찍히는지 확인하기 위해 임시로 주석처리
+  if (seconds < 60) badgeString = seconds + "s";
+  else {
+    if (seconds < 3600)
+      badgeString = `${parseInt(seconds / 60)}m ${seconds % 60}s`;
+    else
+      badgeString = `${parseInt(seconds / 60 / 60)}h ${parseInt(
+        (seconds % 3600) / 60
+      )}m ${parseInt(seconds % 60)}s`;
+  }
+  */
+  return badgeString;
+};
+
 const getTotalSecondsForDate = (categories, dateString) => {
   let secondsSum = 0;
   for (let c in categories) {

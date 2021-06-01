@@ -1,0 +1,11 @@
+.site-list {
+  flex: 1;
+  flex-direction: column;
+}
+
+.site-item {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: cornflowerblue;
+}
