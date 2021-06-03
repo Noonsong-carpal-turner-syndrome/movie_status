@@ -1,25 +1,22 @@
 const getColorOfCategory = (name) => {
   let color;
   switch (name) {
-    case "entertainment":
+    case "ent":
       color = "#ffa600";
       break;
-    case "productivity":
+    case "prod":
       color = "#ff7c43";
       break;
-    case "socialMedia":
+    case "sns":
       color = "#f95d6a";
       break;
-    case "infoAndDocs":
-      color = "#d45087";
-      break;
-    case "shopping":
+    case "shop":
       color = "#a05195";
       break;
-    case "education":
+    case "edu":
       color = "#665191";
       break;
-    case "business":
+    case "car":
       color = "#2f4b7c";
       break;
     case "etc":
@@ -115,18 +112,18 @@ function ping() {
   ) {
     if (message.request === "PIE_DATA") {
       if (isEmpty(pieData)) {
-        console.log("pieData is empty | getPieData.js");
+        //console.log("pieData is empty | getPieData.js");
         setTimeout(ping, 100);
       } else {
-        console.log("pieData | getPieData.js");
+        //console.log("pieData | getPieData.js");
         sendResponse({ msg: pieData });
       }
     } else if (message.request === "BAR_CHART_DATA") {
       if (barChartData) {
-        console.log("barChartData | getPieData.js :", barChartData);
+        //console.log("barChartData | getPieData.js :", barChartData);
         sendResponse({ msg: barChartData });
       } else {
-        console.log("barChartData is empty | getPieData.js");
+        //console.log("barChartData is empty | getPieData.js");
         setTimeout(ping, 1000);
       }
     }

@@ -5,25 +5,22 @@ export function isEmpty(obj) {
 export const getColorOfCategory = (name) => {
   let color;
   switch (name) {
-    case "entertainment":
+    case "ent":
       color = "#ffa600";
       break;
-    case "productivity":
+    case "prod":
       color = "#ff7c43";
       break;
-    case "socialMedia":
+    case "sns":
       color = "#f95d6a";
       break;
-    case "infoAndDocs":
-      color = "#d45087";
-      break;
-    case "shopping":
+    case "shop":
       color = "#a05195";
       break;
-    case "education":
+    case "edu":
       color = "#665191";
       break;
-    case "business":
+    case "car":
       color = "#2f4b7c";
       break;
     case "etc":
@@ -74,25 +71,22 @@ export function getTimeString(second) {
   return `${hourString}${minString}${secString}`;
 }
 export const CATEGORIES = {
-  entertainment: {
+  ent: {
     name: "엔터테인먼트",
   },
-  productivity: {
+  prod: {
     name: "생산성 및 금융",
   },
-  socialMedia: {
+  sns: {
     name: "소셜미디어",
   },
-  infoAndDocs: {
-    name: "정보 및 문서",
-  },
-  shopping: {
+  shop: {
     name: "쇼핑 및 음식",
   },
-  education: {
+  edu: {
     name: "학습",
   },
-  business: {
+  car: {
     name: "사무 및 경력",
   },
   etc: {

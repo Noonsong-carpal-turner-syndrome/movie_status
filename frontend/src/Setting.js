@@ -64,7 +64,7 @@ const Setting = () => {
   }
   function onItemClick(id) {
     let [clickedItem] = siteInfos.filter((siteInfo) => siteInfo.id === id);
-    console.log("clicked Item:", clickedItem);
+    //console.log("clicked Item:", clickedItem);
     setInputs(clickedItem);
     setFormMode({ floating: true, mode: "look" });
   }

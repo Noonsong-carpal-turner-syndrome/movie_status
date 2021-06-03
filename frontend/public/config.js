@@ -1,24 +1,21 @@
 const MIN_PERCENTAGE_GRAPH = 7;
 const CATEGORIES = {
-  entertainment: {
+  ent: {
     name: "엔터테인먼트",
   },
-  productivity: {
+  prod: {
     name: "생산성 및 금융",
   },
-  socialMedia: {
+  sns: {
     name: "소셜미디어",
   },
-  infoAndDocs: {
-    name: "정보 및 문서",
-  },
-  shopping: {
+  shop: {
     name: "쇼핑 및 음식",
   },
-  education: {
+  edu: {
     name: "학습",
   },
-  business: {
+  car: {
     name: "사무 및 경력",
   },
   etc: {

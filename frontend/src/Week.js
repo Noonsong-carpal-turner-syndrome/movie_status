@@ -18,11 +18,11 @@ const Week = () => {
       { request: "BAR_CHART_DATA" },
       function (response) {
         if (chrome.runtime.lastError) {
-          console.log("error ping in request BAR_CHART_DATA");
+          //console.log("error ping in request BAR_CHART_DATA");
           setTimeout(ping, 1000);
         } else {
           setBarChartData(response.msg);
-          console.log("barChartData in Week.js: ", barChartData);
+          //console.log("barChartData in Week.js: ", barChartData);
         }
       }
     );

@@ -12,7 +12,7 @@ function Home({ pieData }) {
   let mm = date.getMonth();
   let dd = date.getDate();
   const [fragIndex, setFragIndex] = useState(-1);
-  console.log("msg from home: ", pieData);
+  //console.log("msg from home: ", pieData);
   return (
     <div className="Home">
       <header className="Home-header">
