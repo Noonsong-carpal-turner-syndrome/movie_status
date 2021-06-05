@@ -97,11 +97,8 @@ from flask_restx import Api, Resource
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
 api = Api(app)  # Flask 객체에 Api 객체 등록
 
-@api.route('/classify',methods=['GET', 'POST'])
+@api.route('/classify',methods=['POST'])
 class Classifier(Resource):
-    def get(self):
-        print("get")
-        return request.get_json()
     def post(self):
         print("post")
         data = request.get_json()

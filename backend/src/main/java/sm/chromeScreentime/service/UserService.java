@@ -1,4 +1,4 @@
-package sm.chromeScreentime.service;
+package sm.chromeScreentime.Service;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import sm.chromeScreentime.model.UserEntity;
 import sm.chromeScreentime.repository.UrlRepository;
 import sm.chromeScreentime.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,28 +21,28 @@ public class UserService {
     @Autowired
     UrlRepository urlRepository;
 
-    public List<UserEntity> findByEmail(String email, UserEntity.CustomUrl[] urls){
-        return userRepository.findByEmail(email, urls);
+    public UserEntity findByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
-    public UrlEntity findByUrl(ObjectId url, String label){
-        return urlRepository.findByUrl(url,label);
+    public UrlEntity findByUrl(String url){
+        return urlRepository.findByUrl(url);
     }
 
-    public List<UrlEntity> findByDomainLike(String domain){
+    public ArrayList<UrlEntity> findByDomainLike(String domain){
         return urlRepository.findByDomainLike(domain);
     }
 
-    public List<UrlEntity> findByCategory(String category){
-        return urlRepository.findByCategory(category);
+    public ArrayList<UrlEntity> findByCategory(String label){
+        return urlRepository.findByCategory(label);
     }
 
-    public List<UrlDTO> insertUrl(ObjectId url, String category){
-        return urlRepository.insertUrl(url, category);
+    public UrlDTO insertUrl(String url, String label){
+        return urlRepository.insertUrl(url, label);
     }
 
-    public List<UrlDTO> insertUserUrl(ObjectId url, String category){
-        return urlRepository.insertUserUrl(url, category);
+    public UrlDTO insertUserUrl(String url, String label){
+        return urlRepository.insertUserUrl(url, label);
     }
 
 }

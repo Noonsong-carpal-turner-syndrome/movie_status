@@ -33,24 +33,19 @@ public class UrlDAO {
         Assert.notNull(template, "MongoTemplate must not be null!");
         this.operations = template;
     }
-
-    public UrlEntity findAllByLike(String url) {
+/*
+    public List<UrlEntity> findAllByLike(String url) {
         Query query = getQuery(url);
         List<UrlEntity> boards = operations.find(query, UrlEntity.class);
-        return boardPage;
+        return boards;
     }
 
     private Query getQuery(String url) {
         Query query = new Query();
         // 일단 냅다 쿼리
-        query.addCriteria(new Criteria().orOperator(Criteria.where("contents").regex(keyword), Criteria.where("title").regex(keyword)));
-        // 결과가 있으면
-        if (searchType.equals(SearchType.ALL)) {
-
-        }
-        else{
-            // 없으면
-        }
+        query.addCriteria(new Criteria().orOperator(Criteria.where("contents")));
+        // 결과가 있으면 if (searchType.equals(SearchType.ALL))
+        // 없으면
 
         return query.with((org.springframework.data.domain.Pageable) pageable);
     }
@@ -60,7 +55,7 @@ public class UrlDAO {
         Update update = getUpdate(updatedEntity);
         return operations.updateFirst(query, update, UrlEntity.class);
     }
-
+*/
     // 단순 복붙이니 확인할 것
     private Update getUpdate(UrlEntity updatedEntity) {
 

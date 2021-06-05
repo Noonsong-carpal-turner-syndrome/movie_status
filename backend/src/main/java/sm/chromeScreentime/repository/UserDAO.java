@@ -7,7 +7,15 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -18,17 +26,6 @@ public class UserDAO {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    @GetMapping("/queryTest")
-    public void queryTest() {
-        User user = User.builder().email("randallkk@sookmyung.ac.kr").build();
-        mongoTemplate.insert(user);
 
-        // 변경된 부분 -> name이 아닌 _id로 질의한다.
-        Query query = new Query(Criteria.where("_id").is(user.getId()));
 
-        User findUser = mongoTemplate.findOne(query, User.class, "users");
-
-        assertThat(user.getId(), equalTo(findUser.getId()));
-        assertThat(user.getUrls(), equalTo(findUser.getUrls()));
-    }
 }
