@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import "./css/Setting.css";
 import SiteSettingForm from "./SiteSettingForm";
 import SiteList from "./SiteList";
+import { IoIosArrowBack } from "react-icons/io";
+import { HiOutlinePlusSm } from "react-icons/hi";
 
 const Setting = () => {
   //get from backend
@@ -18,7 +20,7 @@ const Setting = () => {
     hostname: "",
     alarm: "0",
     category: "auto",
-    favorite: false,
+    favorite: "false",
   });
 
   function onChange(e) {
@@ -26,14 +28,14 @@ const Setting = () => {
     setInputs({ ...inputs, [name]: value });
   }
   function onAdd() {
+    resetState();
     setFormMode({ floating: true, mode: "create" });
   }
   function onCancel() {
     setFormMode({ floating: false, mode: "" });
     resetState();
   }
-  function onSubmit(e, mode, id) {
-    e.preventDefault();
+  function onSubmit(mode, id) {
     setFormMode({ floating: false, mode: "" });
     if (mode === "edit") {
       setSiteInfos(
@@ -75,11 +77,11 @@ const Setting = () => {
     <div className="setting">
       <div className="setting-header">
         <Link to="/" className="back-button">
-          &#60;
+          <IoIosArrowBack />
         </Link>
         <div className="title">사이트 관리</div>
-        <a href="#" className="add button" onClick={onAdd}>
-          +
+        <a href="#" className="add-button" onClick={onAdd}>
+          <HiOutlinePlusSm />
         </a>
       </div>
       <div className="menu">

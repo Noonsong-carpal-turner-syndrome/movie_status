@@ -92,6 +92,9 @@ export const CATEGORIES = {
   etc: {
     name: "기타",
   },
+  auto: {
+    name: "자동",
+  },
 };
 
 const MIN_PERCENTAGE_GRAPH = 7;

@@ -13,7 +13,8 @@
   flex-direction: row;
   display: flex;
   justify-content: flex-start;
-  height: 10%;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .back-button {
@@ -30,15 +31,14 @@
 .title {
   font-size: 27px;
   font-weight: bold;
+  flex: 1;
+  color: #444444;
 }
 
-.add {
-  font-size: 20px;
-}
-.button {
+.add-button {
   text-decoration: none;
   color: black;
-  margin-right: 10px;
+  font-size: 27px;
 }
 
 .menu {
@@ -46,39 +46,4 @@
   align-items: center;
   width: 100%;
   height: 90%;
-}
-.add-new-site {
-  border-radius: 10px;
-  box-shadow: 1px 1px 5px grey;
-  width: 100%;
-  height: 100%;
-  flex: 1;
-}
-.buttons {
-  width: 100%;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-label {
-  display: block;
-}
-
-input .input-name {
-  border-width: 0px;
-  border-bottom: 1.5px;
-  font-size: 25px;
-}
-
-.site-list {
-  flex: 1;
-  flex-direction: column;
-}
-
-.site-item {
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: cornflowerblue;
-  display: flex;
 }

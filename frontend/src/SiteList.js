@@ -13,13 +13,14 @@ const SiteList = ({ siteInfos, onItemClick }) => {
 export default SiteList;
 const SiteItem = ({ siteInfo, onItemClick }) => {
   return (
-    <div
+    <a
+      hreg="#"
       className="site-item"
       key={siteInfo.id}
       onClick={() => onItemClick(siteInfo.id)}
     >
       <div className="item-name">{siteInfo.name}</div>
       <div className="item-hostname">{siteInfo.hostname}</div>
-    </div>
+    </a>
   );
 };

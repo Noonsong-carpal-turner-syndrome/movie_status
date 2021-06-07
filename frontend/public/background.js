@@ -105,12 +105,6 @@ let CategoriesIsChanged = false,
 //start
 
 chrome.tabs.onActivated.addListener((tab) => {
-  // chrome.notifications.create("", {
-  //   iconUrl: "./settings.png",
-  //   title: "onActivated",
-  //   message: `onActivated`,
-  //   type: "basic",
-  // });
   let hostname,
     classified,
     tabID = tab.tabId;

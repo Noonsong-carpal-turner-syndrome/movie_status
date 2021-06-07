@@ -25,7 +25,7 @@ const Option = ({ fragIndex, categories }) => {
     <div className="option-container">
       <div className="option-title">
         <div className="top3">Top 3</div>
-        <div className="title">{categoryName}</div>
+        <div className="day-title-category">{categoryName}</div>
       </div>
       <div className="option-items">
         <div className="option-domains">{domain3}</div>
