@@ -1,4 +1,35 @@
 //일부 구조 수정, async await 적용
+//icon수정
+chrome.identity.getProfileUserInfo(function (userInfo) {
+  /* Use userInfo.email, or better (for privacy) userInfo.id
+     They will be empty if user is not signed in in Chrome */
+  console.log("userInfo.email:", userInfo.email, ", now:", new Date());
+  // chrome.notifications.create("", {
+  //   iconUrl: "./settings.png",
+  //   title: "Just wanted to notify you",
+  //   message: `your email: ${userInfo.email}`,
+  //   type: "basic",
+  // });
+});
+let sendObj = {
+  url: "https://www.naver.com",
+  title: "네이버",
+  hostname: "www.naver.com",
+};
+fetch("https://a08b5a0fe602.ngrok.io/classification", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json;charset=utf-8",
+  },
+  body: JSON.stringify(sendObj),
+})
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (myJson) {
+    console.log(JSON.stringify(myJson));
+  });
+
 let pieData = {};
 let barChartData = {};
 const isLoaded = false;
