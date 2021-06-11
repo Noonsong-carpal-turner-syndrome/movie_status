@@ -24,6 +24,7 @@
     "unlimitedStorage",
     "identity",
     "identity.email",
-    "notifications"
+    "notifications",
+    "<all_urls>"
   ]
 }
