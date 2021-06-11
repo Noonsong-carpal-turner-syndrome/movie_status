@@ -1,5 +1,4 @@
 package sm.chromeScreentime.testmongo;/*
-package sm.chromeScreentime.testmongo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

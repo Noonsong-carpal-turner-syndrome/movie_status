@@ -1,15 +1,12 @@
 package sm.chromeScreentime.repository;
 
-import com.mongodb.client.result.UpdateResult;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
+import sm.chromeScreentime.model.UrlDTO;
 import sm.chromeScreentime.model.UrlEntity;
 
 import java.lang.reflect.Field;
@@ -20,33 +17,32 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// DAO: persistant layer: C(R)UD from DB to Entity
 @Repository
 public class UrlDAO {
     private MongoOperations operations;
+
+    @Autowired
+    UrlRepository urlRepository;
 
     @Autowired
     public UrlDAO(MongoTemplate template) {
         Assert.notNull(template, "MongoTemplate must not be null!");
         this.operations = template;
     }
-
-    public UrlEntity findAllByLike(String url) {
+/*
+    public List<UrlEntity> findAllByLike(String url) {
         Query query = getQuery(url);
         List<UrlEntity> boards = operations.find(query, UrlEntity.class);
-        return boardPage;
+        return boards;
     }
 
     private Query getQuery(String url) {
         Query query = new Query();
         // 일단 냅다 쿼리
-        query.addCriteria(new Criteria().orOperator(Criteria.where("contents").regex(keyword), Criteria.where("title").regex(keyword)));
-        // 결과가 있으면
-        if (searchType.equals(SearchType.ALL)) {
-
-        }
-        else{
-            // 없으면
-        }
+        query.addCriteria(new Criteria().orOperator(Criteria.where("contents")));
+        // 결과가 있으면 if (searchType.equals(SearchType.ALL))
+        // 없으면
 
         return query.with((org.springframework.data.domain.Pageable) pageable);
     }
@@ -56,7 +52,7 @@ public class UrlDAO {
         Update update = getUpdate(updatedEntity);
         return operations.updateFirst(query, update, UrlEntity.class);
     }
-
+*/
     // 단순 복붙이니 확인할 것
     private Update getUpdate(UrlEntity updatedEntity) {
 
@@ -89,4 +85,7 @@ public class UrlDAO {
         return Field.substring(0, 1).toLowerCase() + Field.substring(1);
     }
 
+    /*public UrlDTO insertUrl(String url, String label){
+        urlRepository.save(url, label);
+    }*/
 }

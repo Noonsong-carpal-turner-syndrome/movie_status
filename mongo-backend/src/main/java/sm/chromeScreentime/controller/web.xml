@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<web-app id="WebApp_9" version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-</beans>
+        <!-- CORS setting -->
+    <filter>
+    <filter-name>chromeExtension</filter-name>
+    <filter-class>sm.chromeScreentime.domainfilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+    <filter-name>chromeExtension</filter-name>
+    <url-pattern>/*</url-pattern>  <!-- 필터가 적용될 대상: url 패턴 -->
+    </filter-mapping>

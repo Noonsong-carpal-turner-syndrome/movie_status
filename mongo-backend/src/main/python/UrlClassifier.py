@@ -1,3 +1,4 @@
+import flask
 from konlpy.tag import Okt  # tokenizing(url, title)
 import nltk # vectorizing(X_token)
 from nltk import sent_tokenize, word_tokenize
@@ -97,13 +98,11 @@ from flask_restx import Api, Resource
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
 api = Api(app)  # Flask 객체에 Api 객체 등록
 
-@api.route('/classify',methods=['GET', 'POST'])
+@api.route('/classify',methods=['POST'])
 class Classifier(Resource):
-    def get(self):
-        print("get")
-        return request.get_json()
     def post(self):
         print("post")
+        res = flask.Response()
         data = request.get_json()
         url = str(data['url'])
         title = str(data['title'])
@@ -123,6 +122,7 @@ class Classifier(Resource):
         conn.close()
 
         label = classifying(url)
+        res.headers["Access-Control-Allow-Origin"] = "*"
         return label # label 보내주기
 
 if __name__ == '__main__':

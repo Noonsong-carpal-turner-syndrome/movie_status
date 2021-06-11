@@ -1,17 +1,17 @@
 package sm.chromeScreentime.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "users")
-@AllArgsConstructor
-@NoArgsConstructor
+@Document(collection = "urls")
+@Builder
 public class UrlEntity {
 
     private String url;
     private String label;
     private String domain;
+
 }

@@ -6,20 +6,25 @@ import sm.chromeScreentime.Service.UrlService;
 import sm.chromeScreentime.Service.UserService;
 import sm.chromeScreentime.model.UrlDTO;
 import sm.chromeScreentime.model.UrlEntity;
+import sm.chromeScreentime.repository.UrlRepository;
 
 // request body에서 url, email 받아올 수 있게 하기
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping()
 public class UserController {
     @Autowired
-    UserService userService;
     UrlService urlService;
+    UserService userService;
     //create -post
     //read -get
 
-    @GetMapping("/classification")
-    public String Classify(UrlDTO urldto){
-        return urlService.Classify(urldto);
+    @PostMapping("/classification")
+    @ResponseBody
+    public UrlDTO Classify(@RequestBody UrlDTO urldto){
+        System.out.println("url: " + urldto.getUrl() + ", title:" + urldto.getTitle());
+        UrlDTO classifiedDTO = urlService.Classify(urldto);
+        return classifiedDTO;
     }
 
     @GetMapping("/model/{url}")
@@ -33,7 +38,7 @@ public class UserController {
         public List<UrlEntity> findByCategory(String category){
             return userService.findByCategory(category);
         }
-    */
+
     @PostMapping("/model/{url}")
     public UrlDTO insertUrl(@PathVariable String url, @RequestBody String category){
         return userService.insertUrl(url,category);
@@ -43,4 +48,5 @@ public class UserController {
     public UrlDTO insertUserUrl(@PathVariable String url, @RequestBody String category){
         return userService.insertUserUrl(url,category);
     }
+    */
 }
