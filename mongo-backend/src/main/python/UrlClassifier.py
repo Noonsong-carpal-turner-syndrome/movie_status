@@ -5,8 +5,6 @@ from nltk import sent_tokenize, word_tokenize
 from nltk.stem import LancasterStemmer
 from nltk.corpus import stopwords
 import re
-import tensorflow
-from tensorflow import keras
 from konlpy.tag import Okt
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -87,14 +85,16 @@ def classifying(url, X_data):
     labels =[]
     for doc in documents:
         labels.append(doc['label'])
-    labels.append(str(predicting(X_data)))
+    if len(labels) == 0:
+        labels.append(str(predicting(X_data)))
     cnt = Counter(labels)
-    result = cnt.most_common(1)[0][0]
+    result = cnt.most_common(1)[0][0]   # result: str
 
     return result
 
 from flask import Flask, request
 from flask_restx import Api, Resource
+import json
 
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
 api = Api(app)  # Flask 객체에 Api 객체 등록
@@ -102,29 +102,20 @@ api = Api(app)  # Flask 객체에 Api 객체 등록
 @api.route('/classify',methods=['POST'])
 class Classifier(Resource):
     def post(self):
-        print("post")
         res = flask.Response()
-        data = request.get_json()
+        data = request.get_json(force=True)
         url = str(data['url'])
         title = str(data['title'])
-        domain = url.split('/')[2]
+        # domain = url.split('/')[2]
         X_token = tokenizing(url,title)
         X_data = vectorizing(X_token)
 
-        '''predicted_url = {
-            "url" : url,
-            "domain" : domain,
-            "label" : predicting(X_data)
-        }
-        conn = MongoClient('mongodb+srv://youngbeen:sm1613362@chrome-screentime.vmdiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
-        db = conn.chrome_sreentime
-        collection = db.urls
-        documents = collection.insert(predicted_url)
-        conn.close()'''
-
-        label = classifying(url, X_data)
+        label = int(classifying(url, X_data))
         res.headers["Access-Control-Allow-Origin"] = "*"
-        res.set_data(label)
+        res.headers["Content-Type"] = "application/json; charset=utf-8"
+        print(label)
+        res.set_data(json.dumps(label))
+
         return res # label 보내주기
 
 if __name__ == '__main__':
