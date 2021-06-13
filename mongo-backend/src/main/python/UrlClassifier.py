@@ -65,29 +65,32 @@ def vectorizing(X_token):
     return X_data
 
 def predicting(X_data):
-    model = load_model('model1.h5')
+    model = load_model('E:\study\screentime_chrome\mongo-backend\src\main\python\model1.h5')
     predict = model.predict_classes(X_data)
     # 기존 X_data, y_data json 파일에 X_data, predict 추가하기=> training(url)에 필요
-    return predict
-
+    return predict[0]
+    
 from pymongo import MongoClient
 from collections import Counter
 
 '''url과 같은 domain의 최빈 label 리턴'''
 
-def classifying(url):
+def classifying(url, X_data):
     # mongodb에서 같은 domain인 url들 검색해서 label 갖고오기 > 최빈값
-    domain = url.split('/').str[2]
+    domain = url.split('/')[2]
     conn = MongoClient('mongodb+srv://youngbeen:sm1613362@chrome-screentime.vmdiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
     db = conn.chrome_screentime
     collection = db.urls
-    documents = collection.find({"domain":domain},{"_id":False,"url":False,"label":True,"domain":False})
+    documents = collection.find({"domain":domain})  # ,{"_id":False,"url":False,"label":True,"domain":False}
     conn.close()
     
     labels =[]
     for doc in documents:
         labels.append(doc['label'])
+    labels.append(str(predicting(X_data)))
+    print(labels)
     cnt = Counter(labels)
+    print(cnt)
     result = cnt.most_common(1)[0][0]
 
     return result
@@ -106,11 +109,11 @@ class Classifier(Resource):
         data = request.get_json()
         url = str(data['url'])
         title = str(data['title'])
-        domain = url.split('/').str[2]
+        domain = url.split('/')[2]
         X_token = tokenizing(url,title)
         X_data = vectorizing(X_token)
 
-        predicted_url = {
+        '''predicted_url = {
             "url" : url,
             "domain" : domain,
             "label" : predicting(X_data)
@@ -119,11 +122,12 @@ class Classifier(Resource):
         db = conn.chrome_sreentime
         collection = db.urls
         documents = collection.insert(predicted_url)
-        conn.close()
+        conn.close()'''
 
-        label = classifying(url)
+        label = classifying(url, X_data)
         res.headers["Access-Control-Allow-Origin"] = "*"
-        return label # label 보내주기
+        res.set_data(label)
+        return res # label 보내주기
 
 if __name__ == '__main__':
     app.run(debug = True, host="127.0.0.1", port=5000)

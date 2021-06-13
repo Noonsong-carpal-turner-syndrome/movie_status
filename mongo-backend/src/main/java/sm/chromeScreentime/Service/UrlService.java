@@ -53,6 +53,7 @@ public class UrlService {
         }
 
         UrlDTO labeledDTO = new UrlDTO(urldto, sb);
+        System.out.println("url: "+labeledDTO.getUrl()+", title: "+labeledDTO.getTitle());
         UrlEntity labeledEntity = UrlEntity.builder().url(labeledDTO.getUrl()).label(labeledDTO.getLabel()).domain(labeledDTO.getDomain()).build();
         urlRepository.save(labeledEntity);
 
