@@ -24,6 +24,7 @@ public class UserController {
     public UrlDTO Classify(@RequestBody UrlDTO urldto){
         System.out.println("url: " + urldto.getUrl() + ", title:" + urldto.getTitle());
         UrlDTO classifiedDTO = urlService.Classify(urldto);
+        System.out.println("<Classified> url: " + classifiedDTO.getUrl() + ", title:" + classifiedDTO.getTitle());
         return classifiedDTO;
     }
 

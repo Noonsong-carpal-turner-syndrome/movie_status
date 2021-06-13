@@ -27,11 +27,11 @@ public class UrlDTO {
         this.title = title;
     }
 
-    public UrlDTO(UrlDTO urldto, String title) {
+    public UrlDTO(UrlDTO urldto, String label) {
         this.url = urldto.getUrl();
-        this.label = urldto.getLabel();
+        this.label = label;
         this.domain = urldto.getDomain();
-        this.title = title;
+        this.title = urldto.getTitle();
     }
 
     public UrlDTO changeLabel(String newLabel) {
