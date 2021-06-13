@@ -15,6 +15,16 @@ const getDateString = (before) => {
   return dateString;
 };
 
+const getBadgeTimeString = (seconds) => {
+  let badgeString = "";
+  if (seconds < 60) badgeString = seconds + "s";
+  else {
+    if (seconds < 3600) badgeString = `${parseInt(seconds / 60)}m`;
+    else badgeString = `${parseInt(seconds / 60 / 60)}h`;
+  }
+  return badgeString;
+};
+
 const getTotalSecondsForDate = (categories, dateString) => {
   let secondsSum = 0;
   for (let c in categories) {

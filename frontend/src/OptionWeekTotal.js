@@ -29,7 +29,7 @@ const OptionWeekTotal = ({ barChartData }) => {
       weekTotalCategoryArray.push(obj);
     }
     weekTotalCategoryArray.sort(compare);
-    console.log("weekTotalCategoryArray:", weekTotalCategoryArray);
+    //console.log("weekTotalCategoryArray:", weekTotalCategoryArray);
     category3 = weekTotalCategoryArray.slice(0, 3).map((item) => (
       <div className="category-item">
         <div className="category-name">{CATEGORIES[item.name].name}</div>

@@ -12,11 +12,10 @@ chrome.identity.getProfileUserInfo(function (userInfo) {
   // });
 });
 let sendObj = {
-  url: "https://www.naver.com",
-  title: "네이버",
-  hostname: "www.naver.com",
+  url: "https://blog.naver.com/jung55120/222038434043",
+  title: "[자격증 취득] 데이터 비전공자인 내가, AD.. : 네이버블로그",
 };
-fetch("https://a08b5a0fe602.ngrok.io/classification", {
+fetch("https://f97c0292b8f9.ngrok.io/classification", {
   method: "POST",
   headers: {
     "Content-Type": "application/json;charset=utf-8",
@@ -24,6 +23,7 @@ fetch("https://a08b5a0fe602.ngrok.io/classification", {
   body: JSON.stringify(sendObj),
 })
   .then(function (response) {
+    //console.log(response);
     return response.json();
   })
   .then(function (myJson) {
@@ -33,26 +33,28 @@ fetch("https://a08b5a0fe602.ngrok.io/classification", {
 let pieData = {};
 let barChartData = {};
 const isLoaded = false;
-const seconds = { today: 0, total: 0 },
+const seconds = {
+    today: 0,
+    //total: 0
+  },
   dates = { today: "", since: "" };
 let todayBarData = {
   todayTotalSeconds: 0,
   categories: {
-    entertainment: { todaySeconds: 0 },
-    productivity: { todaySeconds: 0 },
-    socialMedia: { todaySeconds: 0 },
-    infoAndDocs: { todaySeconds: 0 },
-    shopping: { todaySeconds: 0 },
-    education: { todaySeconds: 0 },
-    business: { todaySeconds: 0 },
+    ent: { todaySeconds: 0 },
+    prod: { todaySeconds: 0 },
+    sns: { todaySeconds: 0 },
+    shop: { todaySeconds: 0 },
+    edu: { todaySeconds: 0 },
+    car: { todaySeconds: 0 },
     etc: { todaySeconds: 0 },
   },
 };
 let CategoriesIsChanged = false,
   categories = {
-    entertainment: {
+    ent: {
       todaySeconds: 0,
-      name: "entertainment",
+      name: "ent",
       totalSeconds: 0,
       domains: {
         /*
@@ -67,39 +69,33 @@ let CategoriesIsChanged = false,
         },*/
       },
     },
-    productivity: {
+    prod: {
       todaySeconds: 0,
-      name: "productivity",
+      name: "prod",
       totalSeconds: 0,
       domains: {},
     },
-    socialMedia: {
+    sns: {
       todaySeconds: 0,
-      name: "socialMedia",
+      name: "sns",
       totalSeconds: 0,
       domains: {},
     },
-    infoAndDocs: {
+    shop: {
       todaySeconds: 0,
-      name: "infoAndDocs",
+      name: "shop",
       totalSeconds: 0,
       domains: {},
     },
-    shopping: {
+    edu: {
       todaySeconds: 0,
-      name: "shopping",
+      name: "edu",
       totalSeconds: 0,
       domains: {},
     },
-    education: {
+    car: {
       todaySeconds: 0,
-      name: "education",
-      totalSeconds: 0,
-      domains: {},
-    },
-    business: {
-      todaySeconds: 0,
-      name: "business",
+      name: "car",
       totalSeconds: 0,
       domains: {},
     },
@@ -113,17 +109,37 @@ let CategoriesIsChanged = false,
 
 //start
 
+chrome.tabs.onActivated.addListener((tab) => {
+  let hostname,
+    classified,
+    tabID = tab.tabId;
+  chrome.tabs.get(tabID, (tab) => {
+    hostname = new URL(tab.url).hostname;
+    setBadge(tabID, "");
+    classified = getClassified(hostname);
+    categories[classified].domains[hostname] &&
+      categories[classified].domains[hostname].days[dates.today] &&
+      setBadge(
+        tabID,
+        getBadgeTimeString(
+          categories[classified].domains[hostname].days[dates.today].seconds
+        )
+      );
+  });
+});
+
 prepareDatas();
 updateCateEvery(1000);
-saveCateAndTotal(1000);
+saveCateEvery(1000);
 saveTodayBarData(1000);
 
 function prepareDatas() {
   dates.today = getDateString();
   loadDateSince(dates.today);
-  loadTotalSeconds();
-  saveTotalSeconds();
+  // loadTotalSeconds();
+  // saveTotalSeconds();
   loadCategories();
+  pieData = getPieData();
 }
 function loadDateSince(todayString) {
   localStorage.load("dateSince", todayString, (storage) => {
@@ -134,37 +150,34 @@ function loadDateSince(todayString) {
 function saveDateSince() {
   localStorage.save("dateSince", dates.since);
 }
-function loadTotalSeconds() {
-  localStorage.load("totalSeconds", 0, (storage) => {
-    seconds.total = storage["totalSeconds"];
-  });
-}
-function saveTotalSeconds() {
-  localStorage.save("totalSeconds", seconds.total);
-}
+// function loadTotalSeconds() {
+//   localStorage.load("totalSeconds", 0, (storage) => {
+//     seconds.total = storage["totalSeconds"];
+//   });
+// }
+// function saveTotalSeconds() {
+//   localStorage.save("totalSeconds", seconds.total);
+// }
 function loadCategories() {
   localStorage.load("categories", categories, (storage) => {
     categories = storage.categories || [];
     seconds.today = getTotalSecondsForDate(categories, getDateString());
-    //console.log("When start/ seconds.today :", seconds.today);
-    //console.log("when start/ categories :", categories);
-    //console.log("when start/ dates.since :", dates.since);
   });
 }
+
 function updateCateEvery(ms) {
   setInterval(() => {
     updateCategories();
-    //console.log("seconds.today:", seconds.today);
   }, ms);
 }
-function saveCateAndTotal(ms) {
+function saveCateEvery(ms) {
   setInterval(() => {
-    CategoriesIsChanged && (saveCategories(), saveTotalSeconds());
-    //console.log(categories);
-    pieData = getPieData();
+    CategoriesIsChanged && saveCategories();
   }, ms);
 }
 function updateCategories() {
+  //update_timeStart = Date.now();
+  //console.log("update timeStart:", update_timeStart);
   let activeTab,
     today = getDateString();
   if (dates.today !== today) {
@@ -173,7 +186,7 @@ function updateCategories() {
   chrome.windows.getLastFocused({ populate: true }, (focusedWindow) => {
     let tabs = focusedWindow.tabs;
     for (let i in tabs) {
-      if (tabs[i].active) {
+      if (tabs.hasOwnProperty(i) && tabs[i].active) {
         activeTab = tabs[i];
         break;
       }
@@ -183,30 +196,13 @@ function updateCategories() {
       let tabId = activeTab.id,
         tabURL = new URL(activeTab.url),
         tabHostname = tabURL.hostname;
-      /*
-      TODO 외부 API 모델 사용
-      */
-      let classified = "etc"; //dummy
-      if (tabHostname === "extensions") classified = "entertainment";
-      else if (tabHostname === "www.naver.com") classified = "socialMedia";
-      else if (tabHostname === "www.stackoverflow.com")
-        classified = "education";
-      else if (tabHostname === "velog.io") classified = "infoAndDocs";
-      else if (tabHostname === "www.google.com") classified = "business";
-      else if (tabHostname === "app.slack.com") classified = "business";
-      else if (tabHostname === "stackoverflow.com") classified = "education";
-      else if (tabHostname === "developer.chrome.com") classified = "education";
-      else if (tabHostname === "snowboard.sookmyung.ac.kr")
-        classified = "education";
-      else if (tabHostname === "search.naver.com") classified = "infoAndDocs";
-      else if (tabHostname === "chrome.google.com") classified = "business";
-
+      let classified = getClassified(tabHostname);
       if (
         focusedWindow.focused &&
         state === "active" &&
         categories.hasOwnProperty(classified)
       ) {
-        seconds.total += 1;
+        //seconds.total += 1;
         seconds.today += 1;
         let category = categories[classified];
         category.domains[tabHostname] =
@@ -219,19 +215,27 @@ function updateCategories() {
         domainObj.totalSeconds += 1;
         domainObj.days[dates.today].seconds += 1;
         CategoriesIsChanged = true;
+        chrome.browserAction.setBadgeText({
+          tabId: tabId,
+          text: getBadgeTimeString(domainObj.days[dates.today].seconds || "0"),
+        });
       }
+      update_timeEnd = Date.now();
+      //console.log("update timeEnd:", update_timeEnd);
+      //console.log("update milliseconds:", update_timeEnd - update_timeStart);
+      CategoriesIsChanged = true;
+      pieData = getPieData();
     });
   });
 }
 function saveCategories() {
   localStorage.save("categories", categories, () => {
     CategoriesIsChanged = false;
-    //console.log("categories:", categories);
   });
 }
-function saveTotalSeconds() {
-  localStorage.save("totalSeconds", seconds.total);
-}
+// function saveTotalSeconds() {
+//   localStorage.save("totalSeconds", seconds.total);
+// }
 function saveTodayBarData(ms) {
   setInterval(() => {
     let dateArray = getDateArray();
@@ -241,13 +245,12 @@ function saveTodayBarData(ms) {
     }
     localStorage.save(dates.today, todayBarData);
     localStorage.loadSeveral(dateArray, (values) => {
-      //value==object
       let weekTotalSeconds = 0;
       for (let i in values) {
-        weekTotalSeconds += values[i].todayTotalSeconds;
+        if (!isEmpty(values[i]))
+          weekTotalSeconds += values[i].todayTotalSeconds;
       }
       barChartData.weekTotalSeconds = weekTotalSeconds;
-
       barChartData.barData = values;
     });
   }, ms);
@@ -275,4 +278,20 @@ function getDateArray() {
     }
   }
   return dateArray;
+}
+
+function getClassified(tabHostname) {
+  let classified = "etc"; //dummy
+  if (tabHostname === "extensions") classified = "ent";
+  else if (tabHostname === "www.naver.com") classified = "sns";
+  else if (tabHostname === "www.stackoverflow.com") classified = "edu";
+  else if (tabHostname === "velog.io") classified = "edu";
+  else if (tabHostname === "www.google.com") classified = "car";
+  else if (tabHostname === "app.slack.com") classified = "car";
+  else if (tabHostname === "stackoverflow.com") classified = "edu";
+  else if (tabHostname === "developer.chrome.com") classified = "edu";
+  else if (tabHostname === "snowboard.sookmyung.ac.kr") classified = "edu";
+  else if (tabHostname === "search.naver.com") classified = "sns";
+  else if (tabHostname === "chrome.google.com") classified = "car";
+  return classified;
 }

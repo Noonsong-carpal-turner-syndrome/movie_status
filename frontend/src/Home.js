@@ -12,14 +12,14 @@ function Home({ pieData }) {
   let mm = date.getMonth();
   let dd = date.getDate();
   const [fragIndex, setFragIndex] = useState(-1);
-  console.log("msg from home: ", pieData);
+  //console.log("msg from home: ", pieData);
   return (
     <div className="Home">
       <header className="Home-header">
         <div className="date">{`${yyyy}년 ${mm + 1}월 ${dd}일`}</div>
         <div className="settingIcon">
           <Link to="/Setting" className="setting-button">
-            환경설정
+            설정
           </Link>
         </div>
       </header>

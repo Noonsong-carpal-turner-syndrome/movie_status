@@ -2,7 +2,7 @@ import React from "react";
 import Bar from "./Bar";
 
 const BarChart = ({ barChartData, optionOnHandler, optionOutHandler }) => {
-  console.log("barChartData in BarChart.js:", barChartData);
+  //console.log("barChartData in BarChart.js:", barChartData);
   const gap = 9,
     barWidth = 18,
     barWrapWidth = gap * 2 + barWidth,

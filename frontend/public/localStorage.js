@@ -17,7 +17,9 @@ const localStorage = {
     chrome.storage.local.get(keys, (fromStorage) => {
       let values = {};
       for (let i in keys) {
-        values[keys[i]] = JSON.parse(fromStorage[keys[i]]);
+        if (fromStorage[keys[i]])
+          values[keys[i]] = JSON.parse(fromStorage[keys[i]]);
+        else values[keys[i]] = {};
       }
       callback(values);
     });

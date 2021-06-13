@@ -6,7 +6,6 @@ import { getDateString, getTimeString, isEmpty } from "./js/popup-config";
 import BarChart from "./BarChart";
 import OptionWeek from "./OptionWeek";
 import OptionWeekTotal from "./OptionWeekTotal";
-
 const Week = () => {
   let date = new Date();
   let yyyy = date.getFullYear();
@@ -19,11 +18,11 @@ const Week = () => {
       { request: "BAR_CHART_DATA" },
       function (response) {
         if (chrome.runtime.lastError) {
-          console.log("error ping in request BAR_CHART_DATA");
+          //console.log("error ping in request BAR_CHART_DATA");
           setTimeout(ping, 1000);
         } else {
           setBarChartData(response.msg);
-          console.log("barChartData in Week.js: ", barChartData);
+          //console.log("barChartData in Week.js: ", barChartData);
         }
       }
     );
@@ -36,7 +35,7 @@ const Week = () => {
         <div className="date">{`${yyyy}년 ${mm + 1}월 ${dd}일`}</div>
         <div className="settingIcon">
           <Link to="/Setting" className="setting-button">
-            환경설정
+            설정
           </Link>
         </div>
       </header>

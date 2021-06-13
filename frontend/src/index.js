@@ -9,10 +9,10 @@ import reportWebVitals from "./reportWebVitals";
 function ping() {
   chrome.runtime.sendMessage({ request: "PIE_DATA" }, function (response) {
     if (chrome.runtime.lastError) {
-      console.log("error ping in PIE_DATA");
+      //console.log("error ping in PIE_DATA");
       setTimeout(ping, 1000);
     } else {
-      console.log("well ping");
+      //console.log("well ping");
       const msg = response.msg;
       ReactDOM.render(
         <React.StrictMode>
