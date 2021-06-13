@@ -88,9 +88,7 @@ def classifying(url, X_data):
     for doc in documents:
         labels.append(doc['label'])
     labels.append(str(predicting(X_data)))
-    print(labels)
     cnt = Counter(labels)
-    print(cnt)
     result = cnt.most_common(1)[0][0]
 
     return result
