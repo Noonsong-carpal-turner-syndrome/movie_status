@@ -6,10 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository("userDAO")
 public class UserDAO {
-
-    @Autowired
-    MongoTemplate mongoTemplate;
-
-
-
 }

@@ -10,6 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class UrlEntity {
 
+    @Id
+    private ObjectId id;
+
     private String url;
     private String label;
     private String domain;

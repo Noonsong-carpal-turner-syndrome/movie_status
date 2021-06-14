@@ -88,4 +88,8 @@ public class UrlDAO {
     /*public UrlDTO insertUrl(String url, String label){
         urlRepository.save(url, label);
     }*/
+
+    public void save(UrlEntity entity){
+        urlRepository.save(entity);
+    }
 }

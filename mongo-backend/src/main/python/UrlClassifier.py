@@ -73,28 +73,35 @@ from collections import Counter
 
 '''url과 같은 domain의 최빈 label 리턴'''
 
-def classifying(url, X_data):
+'''def classifying(url, X_data):
     # mongodb에서 같은 domain인 url들 검색해서 label 갖고오기 > 최빈값
     domain = url.split('/')[2]
-    conn = MongoClient('mongodb+srv://youngbeen:sm1613362@chrome-screentime.vmdiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+    start = time.time()
+    conn = MongoClient('mongodb+srv://youngbeen:sm1613362@chrome-screentime.vmdiu.mongodb.net/chrome_screentime?retryWrites=true&w=majority')
     db = conn.chrome_screentime
     collection = db.urls
     documents = collection.find({"domain":domain})  # ,{"_id":False,"url":False,"label":True,"domain":False}
+    end = time.time()
+    doc = collection.find_one({"url":url})
     conn.close()
-    
-    labels =[]
-    for doc in documents:
-        labels.append(doc['label'])
-    if len(labels) == 0:
-        labels.append(str(predicting(X_data)))
-    cnt = Counter(labels)
-    result = cnt.most_common(1)[0][0]   # result: str
+    print("DB Access: "+(end-start))
+    if (doc):
+        result = doc['label']
+    else:
+        labels =[]
+        for doc in documents:
+            labels.append(doc['label'])
+        if len(labels) == 0:
+            labels.append(str(predicting(X_data)))
+        cnt = Counter(labels)
+        result = cnt.most_common(1)[0][0]   # result: str
 
     return result
-
+'''
 from flask import Flask, request
 from flask_restx import Api, Resource
 import json
+import time
 
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
 api = Api(app)  # Flask 객체에 Api 객체 등록
@@ -106,15 +113,40 @@ class Classifier(Resource):
         data = request.get_json(force=True)
         url = str(data['url'])
         title = str(data['title'])
-        # domain = url.split('/')[2]
+        domain = url.split('/')[2]
         X_token = tokenizing(url,title)
         X_data = vectorizing(X_token)
 
-        label = int(classifying(url, X_data))
+        # mongodb에서 같은 domain인 url들 검색해서 label 갖고오기 > 최빈값
+        dbstart = time.time()
+        conn = MongoClient('mongodb+srv://youngbeen:sm1613362@chrome-screentime.vmdiu.mongodb.net/')
+        db = conn.chrome_screentime
+        collection = db.urls
+        documents = collection.find({"domain":domain})  # ,{"_id":False,"url":False,"label":True,"domain":False}
+        doc = collection.find_one({"url":url})
+        conn.close()
+        dbend = time.time()
+        print("DB Access: ")
+        print(dbend-dbstart)
+
+        labels =[]
+        for doc in documents:
+            labels.append(doc['label'])
+            # objid = doc['_id']
+        if (doc==None):
+            mdstart = time.time()
+            labels.append(str(predicting(X_data)))
+            mdend = time.time()
+            print("Model: ")
+            print(mdend-mdstart)
+            
+        cnt = Counter(labels)
+        label = cnt.most_common(1)[0][0]   # result: str
+
+        #here
         res.headers["Access-Control-Allow-Origin"] = "*"
         res.headers["Content-Type"] = "application/json; charset=utf-8"
-        print(label)
-        res.set_data(json.dumps(label))
+        res.set_data(json.dumps(int(label)))
 
         return res # label 보내주기
 

@@ -1,8 +1,9 @@
 package sm.chromeScreentime.Service;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sm.chromeScreentime.model.UrlDTO;
 import sm.chromeScreentime.model.UrlEntity;
@@ -12,16 +13,17 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 @Service
 public class UrlService {
 
-    @Autowired
-    UrlRepository urlRepository;
+    private UrlRepository urlRepository;
 
-    @RequestMapping("/classification")
+    @Autowired
+    public UrlService(UrlRepository urlRepository){
+        this.urlRepository = urlRepository;
+    }
+
     @ResponseBody
     public UrlDTO Classify(UrlDTO urldto) {
         String url = urldto.getUrl();
@@ -64,8 +66,16 @@ public class UrlService {
         }
 
         UrlDTO labeledDTO = new UrlDTO(urldto, response.toString());    // response.toString()
-        UrlEntity labeledEntity = UrlEntity.builder().url(labeledDTO.getUrl()).label(labeledDTO.getLabel()).domain(labeledDTO.getDomain()).build();
-        urlRepository.save(labeledEntity);
+
+        /*
+        try{
+            urlRepository.findByUrl(labeledDTO.getUrl());
+        } catch(IncorrectResultSizeDataAccessException e){
+            UrlEntity labeledEntity = UrlEntity.builder().id(new ObjectId()).url(labeledDTO.getUrl()).label(labeledDTO.getLabel()).domain(labeledDTO.getUrl().split("/")[2]).build();
+            urlRepository.save(labeledEntity);
+            System.out.println(labeledEntity);
+            System.out.println("saved");
+        }*/
 
         return labeledDTO;
     }

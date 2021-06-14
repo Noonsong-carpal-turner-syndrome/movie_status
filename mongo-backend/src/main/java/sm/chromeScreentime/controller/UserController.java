@@ -13,9 +13,10 @@ import sm.chromeScreentime.repository.UrlRepository;
 @RestController
 @RequestMapping()
 public class UserController {
+
     @Autowired
-    UrlService urlService;
-    UserService userService;
+    private UrlService urlService;
+    private UserService userService;
     //create -post
     //read -get
 
@@ -28,9 +29,20 @@ public class UserController {
         return classifiedDTO;
     }
 
+    @GetMapping("/classification")
+    @ResponseBody
+    public String Answer(){
+        return "Answered!";
+    }
+
     @GetMapping("/model/{url}")
     public UrlEntity findByUrl(@PathVariable String url){
         return userService.findByUrl(url);
+    }
+
+    @GetMapping("/error")
+    public String Error(){
+        return "error";
     }
     /*
         public List<UrlEntity> findByDomainLike(String domain){
